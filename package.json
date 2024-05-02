@@ -1,0 +1,18 @@
+{
+  "name": "use-stable-reference",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElanMedoff/use-stable-reference"
+  },
+  "bugs": {
+    "url": "https://github.com/ElanMedoff/use-stable-reference/issues"
+  },
+  "homepage": "https://github.com/ElanMedoff/use-stable-reference#readme",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "license": "MIT",
+  "author": "Elan Medoff <info@elanmed.dev> (https://elanmed.dev/)"
+}
