@@ -1,26 +1,42 @@
 {
   "name": "use-stable-reference",
   "version": "0.0.1",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "module": "./dist/index.mjs",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "test": "jest src/**",
     "test:watch": "jest src/** --watch",
     "prettier": "prettier src/** --write",
-    "lint": "eslint src/**"
+    "lint": "eslint src/**",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.8.2",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "husky": "^8.0.0",
+    "husky": "^9.0.11",
     "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.2",
