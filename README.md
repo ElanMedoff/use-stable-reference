@@ -1,5 +1,10 @@
 # use-stable-reference
 
+<!-- TODO -->
+<!-- add github workflows -->
+<!-- update to version 1.0.0 -->
+<!-- figure out an icon -->
+
 Simple React hooks to access referentially stable, up-to-date versions of non-primitives.
 
 [![version](https://img.shields.io/npm/v/use-stable-reference)](https://www.npmjs.com/package/use-stable-reference)
@@ -8,6 +13,12 @@ Simple React hooks to access referentially stable, up-to-date versions of non-pr
 [![package quality](https://packagequality.com/shield/use-stable-reference.svg)](https://packagequality.com/#?package=use-stable-reference)
 [![license](https://img.shields.io/npm/l/use-stable-reference)](https://github.com/ElanMedoff/use-stable-reference/blob/master/LICENSE)
 [![dependencies](https://img.shields.io/badge/dependencies%20-%200%20-%20green)](https://github.com/ElanMedoff/use-stable-reference/blob/master/package.json)
+
+<!-- a hack to get around github sanitizing styles from markdown -->
+<br>
+<p align="center">
+    <img src="https://elanmed.dev/npm-packages/use-stable-reference-logo.png" width="400px" />
+</p>
 
 ## Basic usage
 
@@ -24,9 +35,9 @@ function Library({ callback, value }) {
 }
 ```
 
-`use-stable-reference` really shines for library authors or for those writing reusable code. With a library-consumer relationship, the library author can't reasonably expect that the consumer will preemptively wrap any callbacks in a `useCallback`, or any referentially unstable values in a `useMemo`. This leaves the author with a few possible choices of how to handle consumer-provided non-primitive arguments:
+`use-stable-reference` really shines for library authors or for those writing reusable code. With a library-consumer relationship, the library author can't reasonably expect that the consumer will preemptively wrap any callbacks in a `useCallback`, or any referentially unstable values in a `useMemo`. This leaves the author with a few possible choices for how to handle consumer-provided non-primitive arguments:
 
-1. Leave them out of any dependency arrays, and ignore any React linter warnings/errors
+1. Leave them out of any dependency arrays, and ignore any eslint React linter warnings/errors
 2. Leave them in the dependency arrays, expecting that the effects / memoizations will run every render
 3. Wrap them in a `useStableCallback`/`useStableValue`
 
