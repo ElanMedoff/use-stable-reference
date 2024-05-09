@@ -12,4 +12,4 @@
 
 ### Changed
 
-- Introduction of `useStableCallback` and `useStableValue`.
+- Stable version of `useStableCallback` and `useStableValue`.
