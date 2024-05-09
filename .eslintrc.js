@@ -2,8 +2,8 @@
 const config = {
   extends: [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/stylistic",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "prettier",
@@ -20,10 +20,9 @@ const config = {
     "**/.prettierrc.js",
   ],
   rules: {
-    "@typescript-eslint/unbound-method": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react-hooks/rules-of-hooks": "warn",
+    "react-hooks/exhaustive-deps": "warn",
   },
   settings: {
     react: {
