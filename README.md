@@ -1,10 +1,5 @@
 # use-stable-reference
 
-<!-- TODO -->
-<!-- add github workflows -->
-<!-- update to version 1.0.0 -->
-<!-- figure out an icon -->
-
 Simple React hooks to access referentially stable, up-to-date versions of non-primitives.
 
 [![version](https://img.shields.io/npm/v/use-stable-reference)](https://www.npmjs.com/package/use-stable-reference)

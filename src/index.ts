@@ -14,17 +14,11 @@ function useStableValue<Val>(val: Val) {
  * @param `cb` The callback to be "stabilized".
  * @returns An up-to-date referentially stable callback.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function useStableCallback<Cb extends (...args: any[]) => any>(cb: Cb): Cb {
   const cbRef = React.useRef(cb);
   cbRef.current = cb;
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  return React.useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument
-    ((...args) => cbRef.current(...args)) as Cb,
-    [],
-  );
+  return React.useCallback(((...args) => cbRef.current(...args)) as Cb, []);
 }
 
 export { useStableValue, useStableCallback };
