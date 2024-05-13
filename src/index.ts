@@ -12,7 +12,7 @@ function useStableValue<Val>(val: Val) {
 
 /**
  * @param `cb` The callback to be "stabilized".
- * @returns An up-to-date referentially stable callback.
+ * @returns An up-to-date, referentially stable callback.
  */
 function useStableCallback<Cb extends (...args: any[]) => any>(cb: Cb): Cb {
   const cbRef = React.useRef(cb);
