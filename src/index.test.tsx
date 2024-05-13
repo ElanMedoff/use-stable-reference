@@ -69,12 +69,12 @@ describe("useStableCallback", () => {
     const obj: Obj = {
       spy: jest.fn(),
     };
-    const callback = function () {
-      this.spy();
-    };
-
     expect(obj.spy).toHaveBeenCalledTimes(0);
-    const { result } = renderHook(() => useStableCallback(callback));
+    const { result } = renderHook(() =>
+      useStableCallback(function () {
+        this.spy();
+      }),
+    );
     obj.callback = result.current;
     obj.callback();
     expect(obj.spy).toHaveBeenCalledTimes(1);
