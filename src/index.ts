@@ -17,8 +17,12 @@ function useStableValue<Val>(val: Val) {
 function useStableCallback<Cb extends (...args: any[]) => any>(cb: Cb): Cb {
   const cbRef = React.useRef(cb);
   cbRef.current = cb;
-
-  return React.useCallback(((...args) => cbRef.current(...args)) as Cb, []);
+  return React.useCallback(
+    function (...args) {
+      return cbRef.current.call(this, ...args);
+    } as Cb,
+    [],
+  );
 }
 
 export { useStableValue, useStableCallback };

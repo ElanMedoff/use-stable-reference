@@ -1,5 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
+import { renderHook } from "@testing-library/react-hooks";
 import { useStableCallback, useStableValue } from "./index";
 
 describe("useStableCallback", () => {
@@ -58,6 +59,25 @@ describe("useStableCallback", () => {
     rerender(<Consumer flag />);
     expect(withoutFlag).toHaveBeenCalledTimes(1);
     expect(withFlag).toHaveBeenCalledTimes(1);
+  });
+
+  it("should call the callback with the correct `this`", () => {
+    interface Obj {
+      spy: jest.Mock;
+      callback?: (...args: any[]) => any;
+    }
+    const obj: Obj = {
+      spy: jest.fn(),
+    };
+    const callback = function () {
+      this.spy();
+    };
+
+    expect(obj.spy).toHaveBeenCalledTimes(0);
+    const { result } = renderHook(() => useStableCallback(callback));
+    obj.callback = result.current;
+    obj.callback();
+    expect(obj.spy).toHaveBeenCalledTimes(1);
   });
 });
 
