@@ -20,13 +20,18 @@ Simple React hooks to access referentially stable, up-to-date versions of non-pr
 ```tsx
 import { useStableCallback, useStableValue } from "use-stable-reference";
 
-function Library({ callback, value }) {
-  const stableCallback = useStableCallback(callback);
-  const getStableValue = useStableValue(value);
+function Library({ unstableCallback, unstableValue }) {
+  const stableCallback = useStableCallback(unstableCallback);
+  const getStableValue = useStableValue(unstableValue);
 
   useEffect(() => {
-    // safe to put in dependency arrays!
-  }, [stableCallback, getStableValue]);
+    if (/* ... */) {
+      stableCallback()
+      const stableValue = getStableValue()
+    }
+
+    // safe to add to dependency arrays!
+  }, [stableCallback, getStableValue, /* ... */]);
 }
 ```
 
@@ -38,14 +43,28 @@ function Library({ callback, value }) {
 
 With option 3, the returned callback/value-getter are referentially stable, can safely be used in dependency arrays, and are guaranteed to always be up-to-date if the underlying option ever changes! 🎉
 
-## `useStableCallback`
+### `useStableCallback`
 
 `useStableCallback` accepts one argument, a callback of type: `(...args: any[]) => any`
 
 `useStableCallback` returns an up-to-date, referentially stable callback.
 
-## `useStableValue`
+### `useStableValue`
 
 `useStableValue` accepts one argument, a value of type: `unknown`
 
 `useStableValue` returns a referentially stable callback that returns an up-to-date copy of the argument.
+
+## Technical Notes
+
+A version of this hook has been floating around the React community for a while, often referred to as `useEvent` or `useEffectCallback`. This package hopes to distill the best aspects of several different implementations:
+
+- [`useEvent` RFC](https://github.com/reactjs/rfcs/blob/useevent/text/0000-useevent.md#internal-implementation), [legacy React docs](https://legacy.reactjs.org/docs/hooks-faq.html#how-to-read-an-often-changing-value-from-usecallback)
+  - Basic implementation
+- [`wouter`](https://github.com/molefrog/wouter/blob/v3/packages/wouter/src/react-deps.js)
+  - Initializing the `useRef` to the callback argument, rather than `null`
+- [`react-use-event-hook`](https://github.com/scottrippey/react-use-event-hook)
+  - Support passing a callback argument that uses the `this` keyword
+- [`react-use/useLatest`](https://github.com/streamich/react-use/blob/master/src/useLatest.ts)
+  - Updating the `ref` in the render method
+  - This method is [controversial](https://stackoverflow.com/questions/68025789/is-it-safe-to-change-a-refs-value-during-render-instead-of-in-useeffect), but I think the trade-offs are worth it to ensure the returned stable callback is always up-to-date
