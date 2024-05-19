@@ -5,9 +5,7 @@ import React from "react";
  * @returns A referentially stable callback that can be used to access the latest version of the value.
  */
 function useStableValue<Val>(val: Val) {
-  const valRef = React.useRef(val);
-  valRef.current = val;
-  return React.useCallback(() => valRef.current, []);
+  return useStableCallback(() => val);
 }
 
 /**
