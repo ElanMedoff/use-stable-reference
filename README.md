@@ -43,6 +43,8 @@ function Library({ unstableCallback, unstableValue }) {
 
 With option 3, the returned callback/value-getter are referentially stable, can safely be used in dependency arrays, and are guaranteed to always be up-to-date if the underlying option ever changes! 🎉
 
+## API
+
 ### `useStableCallback`
 
 `useStableCallback` accepts one argument, a callback of type: `(...args: any[]) => any`
@@ -89,6 +91,7 @@ Thankfully, this is rarely something we need to worry about, for a few reasons:
 3. The React compiler, which will make this library unnecessary, is in beta starting with React 19
 4. The callbacks and values that are passed to `useStableCallback` and `useStableValue` may be referentially unstable, but generally have the same behavior from render to render
 
-In other words, for developers using React < 18, there's no issue because concurrent features aren't available; for devs using React > 19, you shouldn't need this package at all because of the React compiler; for those stuck in the middle using React 18, there's a good chance all the `ref` values will have the same behavior anyway, as long as you pass a callback/value with the same behavior every render 
+In other words, for developers using React < 18, there's no issue because concurrent features aren't available; for devs using React > 19, you shouldn't need this package at all because of the React compiler; for those stuck in the middle using React 18, there's a good chance all the `ref` values will have the same behavior anyway, as long as you pass a callback/value with the same behavior every render
 
 That leaves just one scenario to consider. For devs using React 18, with concurrent features, with dynamic callbacks/values, consider yourselves warned: your refs may be out-of-sync with your render!
+
