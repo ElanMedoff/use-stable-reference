@@ -86,12 +86,12 @@ Updating a `ref` in the render method is only dangerous when using concurrent fe
 
 Thankfully, this is rarely something we need to worry about, for a few reasons:
 
-1. Concurrent mode is [opt-in](https://react.dev/blog/2022/03/29/react-v18#gradually-adopting-concurrent-features) only, triggered when using concurrent features
+1. Concurrent mode is [opt-in](https://react.dev/blog/2022/03/29/react-v18#gradually-adopting-concurrent-features), triggered only when using concurrent features
 2. Concurrent features are only available in React 18+
 3. The React compiler, which will make this library unnecessary, is in beta starting with React 19
 4. The callbacks and values that are passed to `useStableCallback` and `useStableValue` may be referentially unstable, but generally have the same behavior from render to render
 
-In other words, for developers using React < 18, there's no issue because concurrent features aren't available; for devs using React > 19, you shouldn't need this package at all because of the React compiler; for those stuck in the middle using React 18, there's a good chance all the `ref` values will have the same behavior anyway, as long as you pass a callback/value with the same behavior every render
+In other words, for developers using React < 18, there's no issue because concurrent features aren't available; for devs using React > 19, you shouldn't need this package at all because of the React compiler; for those stuck in the middle using React 18, there's a good chance all the `ref` values will have the same behavior anyway, as long as you pass a callback/value with the same behavior every render.
 
 That leaves just one scenario to consider. For devs using React 18, with concurrent features, with dynamic callbacks/values, consider yourselves warned: your refs may be out-of-sync with your render!
 
