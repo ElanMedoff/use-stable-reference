@@ -5,7 +5,6 @@ Simple React hooks to access referentially stable, up-to-date versions of non-pr
 [![version](https://img.shields.io/npm/v/use-stable-reference)](https://www.npmjs.com/package/use-stable-reference)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/use-stable-reference)](https://bundlephobia.com/package/use-stable-reference)
 [![downloads per week](https://img.shields.io/npm/dw/use-stable-reference)](https://www.npmjs.com/package/use-stable-reference)
-[![package quality](https://packagequality.com/shield/use-stable-reference.svg)](https://packagequality.com/#?package=use-stable-reference)
 [![license](https://img.shields.io/npm/l/use-stable-reference)](https://github.com/ElanMedoff/use-stable-reference/blob/master/LICENSE)
 [![dependencies](https://img.shields.io/badge/dependencies%20-%200%20-%20green)](https://github.com/ElanMedoff/use-stable-reference/blob/master/package.json)
 
@@ -43,6 +42,8 @@ function Library({ unstableCallback, unstableValue }) {
 
 With option 3, the returned callback/value-getter are referentially stable, can safely be used in dependency arrays, and are guaranteed to always be up-to-date if the underlying option ever changes! 🎉
 
+## API
+
 ### `useStableCallback`
 
 `useStableCallback` accepts one argument, a callback of type: `(...args: any[]) => any`
@@ -55,7 +56,9 @@ With option 3, the returned callback/value-getter are referentially stable, can 
 
 `useStableValue` returns a referentially stable callback that returns an up-to-date copy of the argument.
 
-## Technical Notes
+## FAQ
+
+### Haven't I seen this before?
 
 A version of this hook has been floating around the React community for a while, often referred to as `useEvent` or `useEffectCallback`. This package hopes to distill the best aspects of several different implementations:
 
@@ -67,4 +70,27 @@ A version of this hook has been floating around the React community for a while,
   - Support passing a callback argument that uses the `this` keyword
 - [`react-use/useLatest`](https://github.com/streamich/react-use/blob/master/src/useLatest.ts)
   - Updating the `ref` in the render method
-  - This method is [controversial](https://stackoverflow.com/questions/68025789/is-it-safe-to-change-a-refs-value-during-render-instead-of-in-useeffect), but I think the trade-offs are worth it to ensure the returned stable callback is always up-to-date
+  - This method is [controversial](https://stackoverflow.com/questions/68025789/is-it-safe-to-change-a-refs-value-during-render-instead-of-in-useeffect), but I think the trade-offs are worth it; see below.
+
+### Isn't updating a `ref` in the render method a bad practice?
+
+Updating a `ref` in the render method is only dangerous when using concurrent features. Consider the following scenario:
+
+1. A component re-renders, i.e. the render method runs
+2. The `ref` is updated
+3. The DOM updates are discarded because a second, higher-priority render was triggered
+4. The higher-priority render occurs
+5. Any code which uses the `ref` value before it's updated in step `6` is using a value from a render that was discarded!
+6. The `ref` is updated to the intended value
+
+Thankfully, this is rarely something we need to worry about, for a few reasons:
+
+1. Concurrent mode is [opt-in](https://react.dev/blog/2022/03/29/react-v18#gradually-adopting-concurrent-features), triggered only when using concurrent features
+2. Concurrent features are only available in React 18+
+3. The React compiler, which will make this library unnecessary, is in beta starting with React 19
+4. The callbacks and values that are passed to `useStableCallback` and `useStableValue` may be referentially unstable, but generally have the same behavior from render to render
+
+In other words, for developers using React < 18, there's no issue because concurrent features aren't available; for devs using React > 19, you shouldn't need this package at all because of the React compiler; for those stuck in the middle using React 18, there's a good chance all the `ref` values will have the same behavior anyway, as long as you pass a callback/value with the same behavior every render.
+
+That leaves just one scenario to consider. For devs using React 18, with concurrent features, with dynamic callbacks/values, consider yourselves warned: your refs may be out-of-sync with your render!
+

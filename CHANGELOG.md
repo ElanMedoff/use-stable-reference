@@ -8,11 +8,17 @@
 <!---->
 <!-- ### Fixed -->
 
+## 1.1.2 - 2024-06-08
+
+### Chore
+
+- Update docs with a section on "FAQ".
+
 ## 1.1.1 - 2024-05-19
 
 ### Chore
 
-- Update docs with section on "Technical Notes".
+- Update docs with a section on "Technical Notes".
 
 ## 1.1.0 - 2024-05-19
 
