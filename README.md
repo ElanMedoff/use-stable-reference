@@ -5,7 +5,6 @@ Simple React hooks to access referentially stable, up-to-date versions of non-pr
 [![version](https://img.shields.io/npm/v/use-stable-reference)](https://www.npmjs.com/package/use-stable-reference)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/use-stable-reference)](https://bundlephobia.com/package/use-stable-reference)
 [![downloads per week](https://img.shields.io/npm/dw/use-stable-reference)](https://www.npmjs.com/package/use-stable-reference)
-[![package quality](https://packagequality.com/shield/use-stable-reference.svg)](https://packagequality.com/#?package=use-stable-reference)
 [![license](https://img.shields.io/npm/l/use-stable-reference)](https://github.com/ElanMedoff/use-stable-reference/blob/master/LICENSE)
 [![dependencies](https://img.shields.io/badge/dependencies%20-%200%20-%20green)](https://github.com/ElanMedoff/use-stable-reference/blob/master/package.json)
 
@@ -59,7 +58,7 @@ With option 3, the returned callback/value-getter are referentially stable, can 
 
 ## FAQ
 
-1. Haven't I seen this before?
+### Haven't I seen this before?
 
 A version of this hook has been floating around the React community for a while, often referred to as `useEvent` or `useEffectCallback`. This package hopes to distill the best aspects of several different implementations:
 
@@ -73,7 +72,7 @@ A version of this hook has been floating around the React community for a while,
   - Updating the `ref` in the render method
   - This method is [controversial](https://stackoverflow.com/questions/68025789/is-it-safe-to-change-a-refs-value-during-render-instead-of-in-useeffect), but I think the trade-offs are worth it; see below.
 
-2. Isn't updating a `ref` in the render method a bad practice?
+### Isn't updating a `ref` in the render method a bad practice?
 
 Updating a `ref` in the render method is only dangerous when using concurrent features. Consider the following scenario:
 
